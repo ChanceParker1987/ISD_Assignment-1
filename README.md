@@ -5,10 +5,10 @@ an entire system will be created to manage bank transactions for clients who
 have one or more bank accounts.
 
 ## Author
-[Your name]
+Chance Parker
 
 ## Assignment
-Assignment [assignment number]: [Indicate the name and description of the current assignment]
+Assignment 1: Parker, I don't know what this assignment is about yet.
 
 ## Encapsulation
 [use this section to explain how Encapsulation was achieved in the BankAccount and Transaction classes.]
