@@ -8,7 +8,11 @@ have one or more bank accounts.
 Chance Parker
 
 ## Assignment
-Assignment 1: Parker, I don't know what this assignment is about yet.
+Assignment 1: Classes, Encabsulation and Unit Test Planning
+This assignment involved creating two classes and practicing encapsulation,
+as well as unit testing.
+Assignment 2: Abstraction, Inheritance and Polymorphism
+**Not sure what this assignment is about yet**
 
 ## Encapsulation
 [use this section to explain how Encapsulation was achieved in the BankAccount and Transaction classes.]
