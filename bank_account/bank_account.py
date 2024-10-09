@@ -3,9 +3,10 @@ Description: Module 1 Assignment 1: BankAccount Class
 Author: Chance Parker
 """
 from client.client import Client
+from abc import ABC, abstractmethod
 from datetime import date
 
-class BankAccount:
+class BankAccount(ABC):
     """
     BankAccount class: Represents a Client Bank Account.
     Constants:
@@ -141,11 +142,12 @@ class BankAccount:
 
     def __str__(self) -> str:
         """
-        Returns a string representation of the Bank_Account instance.
-        Returns: str - The Bank_Account instance as a formatted string.
+        Returns a string representation of the BankAccount instance.
+        Returns: str - The BankAccount instance as a formatted string.
         """
         return (f"Account Number: {self.__account_number} Balance: {self.__balance:.2f}.")
     
+    @abstractmethod
     def get_service_charges(self)-> float:
         """
         Returns the service charge for the bank account.
