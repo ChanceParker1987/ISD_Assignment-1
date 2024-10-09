@@ -3,10 +3,13 @@ Description: Module 1 Assignment 1: BankAccount Class
 Author: Chance Parker
 """
 from client.client import Client
+from datetime import date
 
 class BankAccount:
     """
     BankAccount class: Represents a Client Bank Account.
+    Constants:
+        BASE_SERVICE_CHARGE (float): The base service charge for all bank accounts.
     Attributes:
         __account_number (int): The unique id of the bank account.
         __client_number (int): The unique id of the client.
@@ -20,14 +23,20 @@ class BankAccount:
         deposit(amount: float): Deposits funds into the bank account.
         withdraw(amount: float): Withdraws funds from the bank account.
         __str__(): Returns a string representation of the class.
+        get_service_charges(float): Returns the BASE_SERVICE_CHARGE.
     """
-    def __init__(self, account_number: int, client_number: int, balance: float):
+    BASE_SERVICE_CHARGE: float = 0.50 # Class level constant
+
+    def __init__(self, account_number: int, client_number: int, balance: float,
+                 date_created: date = None):
         """
         Initializes a BankAccount object on received arguments (if valid).
         args:
             account_number (int): The account's unique id.
             client_number (int): The client's unique id.
             balance (float): The balance of the bank account.
+            date_created (date): The date the account was created, defaults to today 
+            if not specified.
         raises:
             ValueError if any of the arguments are invalid.
         """
@@ -46,6 +55,13 @@ class BankAccount:
             self.__balance = float(balance)
         except (ValueError, TypeError):
             self.__balance = 0.0
+
+        if date_created is None:
+            self._date_created = date.today()
+        elif not isinstance(date_created, date):
+            raise ValueError("date_created is not a valid date instance.")
+        else:
+            self._date_created = date_created
     
     @property
     def account_number(self) -> int:
@@ -70,6 +86,14 @@ class BankAccount:
         Returns: float - The balance of the bank acount as a float.
         """
         return self.__balance
+    
+    @property
+    def date_created(self)-> date:
+        """
+        Accessor for the __date_created attribute
+        Returns: date - The date the bank account was created.
+        """
+        return self._date_created
     
     def update_balance(self, amount: float):
         """
@@ -103,7 +127,7 @@ class BankAccount:
         args:
             amount (float): The amount to be withdrawn from the bank account"
         """
-        if not isinstance(amount, (int,float)):
+        if not isinstance(amount, (int, float)):
             raise ValueError(f"Withdraw amount: {amount} must be numeric.")
         
         if amount <= 0:
@@ -121,6 +145,14 @@ class BankAccount:
         Returns: str - The Bank_Account instance as a formatted string.
         """
         return (f"Account Number: {self.__account_number} Balance: {self.__balance:.2f}.")
+    
+    def get_service_charges(self)-> float:
+        """
+        Returns the service charge for the bank account.
+        """
+        return self.BASE_SERVICE_CHARGE 
+    
+
 
 
 
