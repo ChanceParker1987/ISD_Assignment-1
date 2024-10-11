@@ -22,6 +22,19 @@ class ChequingAccount(BankAccount):
                  balance: float, date_created: date = None, 
                  overdraft_limit: float = 0.0, overdraft_rate: float = 0.0):
         super().__init__(account_number, client_number, balance, date_created)
+        """
+        Initializes the ChequingAccount object on recievied arguments 
+        (if valid). Inherits from the BankAccount class.
+        args:
+            account_number (int): The account's unique id.
+            client_number (int): The client's unique id.
+            balance (float): The balance of the bank account.
+            date_created (date): The date the account was created, defaults to today.
+            overdraft_limit (float): The overdraft limit of the chequing account.
+            overdraf_rate (float): The interest rate of the overdraft.
+        Raises:
+            ValueError if any of the arguments are invalid.
+        """
 
         if isinstance(overdraft_limit, (int, float)):
             self.__overdraft_limit = float(overdraft_limit)
@@ -33,11 +46,11 @@ class ChequingAccount(BankAccount):
         else:
             self.__overdraft_rate = 0.05
 
-
     @property
     def overdraft_limit(self)-> float:
         """
         Accessor for the overdraft_limit attribute.
+        Returns: float - The overdraft limit for the chequing account.
         """
         return self.__overdraft_limit
     
@@ -45,19 +58,22 @@ class ChequingAccount(BankAccount):
     def overdraft_rate(self)-> float:
         """
         Accessor for the overdraft_rate attribute.
+        Returns: float - The interest rate of the overdraft.
         """
         return self.__overdraft_rate
     
     def get_service_charges(self) -> float:
         """
-        Returns the calculated service charges for the ChequingAccount.
-        Uses the superclass method for the base charge and adds the specific charges.
+        Method to calculate service charges for the ChequingAccount.
+        Returns: float - The calculated service charges for the 
+        chequing account.
         """
         if self.balance >= self.overdraft_limit:
-            return super().get_service_charges()
+            return self.BASE_SERVICE_CHARGES
         else:
-            overdraft_service_charge = (self.overdraft_limit - self.balance) * self.overdraft_rate
-            return super().get_service_charges() + overdraft_service_charge
+            overdraft_service_charge = ((self.overdraft_limit - self.balance) 
+                                        * self.overdraft_rate)
+            return self.BASE_SERVICE_CHARGES + overdraft_service_charge
     
     def __str__(self)-> str:
         """

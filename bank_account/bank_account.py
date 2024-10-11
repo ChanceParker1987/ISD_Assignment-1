@@ -26,7 +26,6 @@ class BankAccount(ABC):
         __str__(): Returns a string representation of the class.
         get_service_charges(float): Returns the BASE_SERVICE_CHARGE.
     """
-    BASE_SERVICE_CHARGE: float = 0.50 # Class level constant
 
     def __init__(self, account_number: int, client_number: int, balance: float,
                  date_created: date = None):
@@ -41,6 +40,8 @@ class BankAccount(ABC):
         raises:
             ValueError if any of the arguments are invalid.
         """
+
+        BASE_SERVICE_CHARGE: float = 0.50 
 
         if isinstance(account_number, int):
             self.__account_number = account_number
@@ -150,9 +151,10 @@ class BankAccount(ABC):
     @abstractmethod
     def get_service_charges(self)-> float:
         """
-        Returns the service charge for the bank account.
+        Abstract method used to calculate service charges.
         """
-        return self.BASE_SERVICE_CHARGE 
+        pass
+
     
 
 
