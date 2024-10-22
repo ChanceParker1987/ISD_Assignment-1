@@ -38,7 +38,6 @@ class InvestmentAccount(BankAccount):
             ValueError if any of the arguments are invalid.
         """
         TEN_YEARS_AGO = date.today() - timedelta(days = 10 * 365.25)
-        BASE_SERVICE_CHARGE = 0.50
 
         if isinstance(management_fee, (int, float)):
             self.__management_fee = float(management_fee)
@@ -46,7 +45,6 @@ class InvestmentAccount(BankAccount):
             self.__management_fee = 2.55
 
         self.TEN_YEARS_AGO = TEN_YEARS_AGO
-        self.BASE_SERVICE_CHARGE = BASE_SERVICE_CHARGE
 
     @property
     def management_fee(self)-> float:

@@ -33,16 +33,12 @@ class SavingsAccount(BankAccount):
         raises:
             ValueError if any of the arguments are invalid.
         """
-        BASE_SERVICE_CHARGE = 0.50
-        SERVICE_CHARGE_PREMIUM = 2.0
+        self.SERVICE_CHARGE_PREMIUM = 2.0
 
         if isinstance(minimum_balance, (int, float)):
             self.__minimum_balance = float(minimum_balance)
         else:
             self.__minimum_balance = 50.00
-
-        self.BASE_SERVICE_CHARGE = BASE_SERVICE_CHARGE
-        self.SERVICE_CHARGE_PREMIUM = SERVICE_CHARGE_PREMIUM
 
     @property
     def minimum_balance(self) -> float:
