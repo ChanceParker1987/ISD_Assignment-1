@@ -46,22 +46,6 @@ class ChequingAccount(BankAccount):
         else:
             self.__overdraft_rate = 0.05
 
-    @property
-    def overdraft_limit(self)-> float:
-        """
-        Accessor for the overdraft_limit attribute.
-        Returns: float - The overdraft limit for the chequing account.
-        """
-        return self.__overdraft_limit
-    
-    @property
-    def overdraft_rate(self)-> float:
-        """
-        Accessor for the overdraft_rate attribute.
-        Returns: float - The interest rate of the overdraft.
-        """
-        return self.__overdraft_rate
-    
     def get_service_charges(self) -> float:
         """
         Method to calculate service charges for the ChequingAccount.

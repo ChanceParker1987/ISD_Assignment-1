@@ -89,14 +89,6 @@ class BankAccount(ABC):
         """
         return self.__balance
     
-    @property
-    def date_created(self)-> date:
-        """
-        Accessor for the __date_created attribute
-        Returns: date - The date the bank account was created.
-        """
-        return self._date_created
-    
     def update_balance(self, amount: float):
         """
         Updates the balance of the bank account by adding the given amount.

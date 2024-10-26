@@ -40,14 +40,6 @@ class SavingsAccount(BankAccount):
         else:
             self.__minimum_balance = 50.00
 
-    @property
-    def minimum_balance(self) -> float:
-        """
-        Accessor for the minimum_balance attribute.
-        Returns: float - The minimum balance for the account.
-        """
-        return self.__minimum_balance
-
     def __str__(self) -> str:
         """
         Returns a string representation of the SavingsAccount instance.
