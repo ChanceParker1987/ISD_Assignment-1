@@ -98,7 +98,8 @@ class Client(Observer):
         subject = f"ALERT: Unusual Activity: {datetime.now()}"
         email_message = f"Notification for {self.client_number}: {self.first_name} {self.last_name}: {message}"
         
-
+        print(subject)
+        print(email_message)
         simulate_send_email(self.email_address, subject, email_message)
     
     def __str__(self) -> str:
