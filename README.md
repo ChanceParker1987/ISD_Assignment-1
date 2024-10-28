@@ -17,3 +17,12 @@ Assignment 3: Design Patterns
 
 ## Encapsulation
 [use this section to explain how Encapsulation was achieved in the BankAccount and Transaction classes.]
+
+## Polymorphism
+[use this section to explain how Polymorphism was achieved in the BankAccount subclasses.]
+
+## Strategy Pattern
+[use this section to explain how the Strategy Pattern is being used in this application.]
+
+## Observer Pattern
+[use this section to explain how the Observer Pattern is being used in this application.]

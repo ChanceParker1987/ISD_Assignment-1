@@ -5,16 +5,18 @@ Author: Chance Parker
 from client.client import Client
 from abc import ABC, abstractmethod
 from datetime import date
+from patterns.observer.subject import Subject
 
-class BankAccount(ABC):
+class BankAccount(Subject, ABC):
     """
     BankAccount class: Represents a Client Bank Account.
-    Constants:
-        BASE_SERVICE_CHARGE (float): The base service charge for all bank accounts.
     Attributes:
         __account_number (int): The unique id of the bank account.
         __client_number (int): The unique id of the client.
         __balance (float): The balance of the bank account.
+    Constants:
+        LOW_BALANCE_LEVEL (float): The threshold below which a low balance warning is triggered.
+        LARGE_TRANSACTION_THRESHOLD (float): The threshold above which a large transaction warning is triggered.
     Methods:
         __init__(): Initializes the BankAccount object.
         account_number(): Accessor for the account_number attribute.
@@ -26,9 +28,14 @@ class BankAccount(ABC):
         __str__(): Returns a string representation of the class.
         get_service_charges(float): Returns the BASE_SERVICE_CHARGE.
     """
+    LOW_BALANCE_LEVEL = 50.0  
+    LARGE_TRANSACTION_THRESHOLD = 9999.99
+
+
 
     def __init__(self, account_number: int, client_number: int, balance: float,
                  date_created: date = None):
+        super().__init__()
         """
         Initializes a BankAccount object on received arguments (if valid).
         args:
@@ -40,8 +47,6 @@ class BankAccount(ABC):
         raises:
             ValueError if any of the arguments are invalid.
         """
-
-        BASE_SERVICE_CHARGE: float = 0.50 
 
         if isinstance(account_number, int):
             self.__account_number = account_number
@@ -100,6 +105,12 @@ class BankAccount(ABC):
             self.__balance += amount
         except (ValueError, TypeError):
             print("Invalid amount. Balance remains unchanged.")
+
+        if self.__balance < BankAccount.LOW_BALANCE_LEVEL:
+                self.notify(f"Low balance warning ${self.__balance:.2f}: on account {self.__account_number}.")
+
+        if abs(amount) > BankAccount.LARGE_TRANSACTION_THRESHOLD:
+                self.notify(f"Large transaction ${amount:.2f}: on account {self.__account_number}.")
 
     def deposit(self, amount: float):
         """

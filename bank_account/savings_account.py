@@ -5,15 +5,13 @@ Author: Chance Parker
 from datetime import date, timedelta
 from client.client import Client
 from bank_account.bank_account import BankAccount
+from patterns.strategy.minimum_balance_strategy import MinimumBalanceStrategy
 
 class SavingsAccount(BankAccount):
     """
     SavingsAccount class: Represents a specific bank account with a minimum balance.
-    Constants:
-        BASE_SERVICE_CHARGE (float): The base service charge for all bank accounts.
-        SERVICE_CHARGE_PREMIUM (float): The service charge when minimum balance is not met.
     Attributes:
-        minimum_balance (float): The minimum balance for the accoint
+        minimum_balance (float): The minimum balance for the account
     Methods:
         get_service_charges: Calculates and returns the service charges based on whether
         the minimum balance is met or not. 
@@ -33,12 +31,13 @@ class SavingsAccount(BankAccount):
         raises:
             ValueError if any of the arguments are invalid.
         """
-        self.SERVICE_CHARGE_PREMIUM = 2.0
 
         if isinstance(minimum_balance, (int, float)):
             self.__minimum_balance = float(minimum_balance)
         else:
             self.__minimum_balance = 50.00
+
+        self.__service_charge_strategy = MinimumBalanceStrategy(self.__minimum_balance)
 
     def __str__(self) -> str:
         """
@@ -56,9 +55,4 @@ class SavingsAccount(BankAccount):
         Calculates the service charges based on the account balance.
         Returns: float - The calculated service charge.
         """
-        if self.balance > self.__minimum_balance:
-
-            return self.BASE_SERVICE_CHARGE
-        else:
-
-            return self.BASE_SERVICE_CHARGE * self.SERVICE_CHARGE_PREMIUM
+        return self.__service_charge_strategy.calculate_service_charges(self)

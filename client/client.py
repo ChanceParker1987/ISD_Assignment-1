@@ -5,8 +5,11 @@ Author: Chance Parker
 import email_validator
 from email_validator import validate_email
 from email_validator import EmailNotValidError
+from patterns.observer.observer import Observer
+from datetime import datetime
+from utility.file_utils import simulate_send_email
 
-class Client:
+class Client(Observer):
     """
     Client class. Represents a client in a bank.
     Attributes:
@@ -84,6 +87,19 @@ class Client:
         Returns: str - The email address associated with the Client instance
         """
         return self.__email_address
+    
+    def update(self, message: str) -> None:
+        """
+        Receives notifications and simulates sending an email alert.
+        
+        Args:
+            message (str): The notification message.
+        """
+        subject = f"ALERT: Unusual Activity: {datetime.now()}"
+        email_message = f"Notification for {self.client_number}: {self.first_name} {self.last_name}: {message}"
+        
+
+        simulate_send_email(self.email_address, subject, email_message)
     
     def __str__(self) -> str:
         """
