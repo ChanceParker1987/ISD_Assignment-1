@@ -75,6 +75,7 @@ class Client:
         Accessor for the last_name attribute.
         Returns: str - The last name associated with the Client instance
         """
+        return self.__last_name
 
     @property
     def email_address(self) -> str:

@@ -12,6 +12,7 @@ Assignment 1: Classes, Encabsulation and Unit Test Planning
 This assignment involved creating two classes and practicing encapsulation,
 as well as unit testing.
 Assignment 2: Abstraction, Inheritance and Polymorphism
+Assignment 3: Design Patterns
 **Not sure what this assignment is about yet**
 
 ## Encapsulation

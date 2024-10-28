@@ -46,14 +46,6 @@ class InvestmentAccount(BankAccount):
 
         self.TEN_YEARS_AGO = TEN_YEARS_AGO
 
-    @property
-    def management_fee(self)-> float:
-        """
-        Accessor for the management_fee sttribute.
-        Returns: float - The management fee for the account.
-        """
-        return self.__management_fee 
-
     def __str__(self)-> str:
         """
         Returns a string representation of the InvestmentAccount instance.
