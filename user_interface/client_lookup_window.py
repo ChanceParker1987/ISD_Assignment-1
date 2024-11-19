@@ -10,3 +10,10 @@ from bank_account.bank_account import BankAccount
 class ClientLookupWindow(LookupWindow):
     pass
         
+"""
+self.client_number_edit.textChanged.connect(self.__on_text_changed)
+  
+    @Slot()
+    def __on_text_changed(self):
+        self.account_table.setRowCount(0)
+"""

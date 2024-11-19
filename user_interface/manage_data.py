@@ -6,6 +6,8 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 import csv
 from datetime import datetime
 import logging
+from bank_account import *
+from client.client import Client
 
 # *******************************************************************************
 # GIVEN LOGGING AND FILE ACCESS CODE
@@ -57,14 +59,50 @@ def load_data()->tuple[dict,dict]:
     # READ CLIENT DATA 
     with open(clients_csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
-        
+        for record in reader:
+            try:
+                client_number = int(record['client_number'])
+                first_name = record['first_name'].strip()
+                last_name = record['last_name'].strip()
+                email_address = record['email_address'].strip()
+
+                client = Client(client_number, first_name, last_name, email_address)
+
+                client_listing[client_number] = client
+
+            except Exception as e:
+                logging.error(f"Error processing client record: {record}. Exception: {e}")
 
     # READ ACCOUNT DATA
     with open(accounts_csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)  
+        for record in reader:
+            try:
+                account_number = int(record['account_number'])
+                client_number = int(record['client_number'])
+                balance = float(record['balance'])
+                account_type = record['account_type'].strip()
+
+                if account_type == "ChequingAccount":
+                    account = ChequingAccount(account_number, client_number, balance)
+                elif account_type == "InvestmentAccount":
+                    account = InvestmentAccount(account_number, client_number, balance)
+                elif account_type == "SavingsAccount":
+                    account = SavingsAccount(account_number, client_number, balance)
+                else:
+                    logging.error(f"Not a valid account type: {account_type} | Record: {record}")
+                    continue
+                
+                if client_number in client_listing:
+                    accounts[account_number] = account
+                else:
+                    logging.error(f"Bank Account: {account_number} contains invalid Client Number: {client_number}")
+
+            except Exception as e:
+                logging.error(f"Error processing account record: {record}. Exception: {e}")
 
     # RETURN STATEMENT
-    
+    return client_listing, accounts
 
 
 def update_data(updated_account: BankAccount) -> None:
