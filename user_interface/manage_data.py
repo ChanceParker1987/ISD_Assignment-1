@@ -42,21 +42,11 @@ accounts_csv_path = os.path.join(data_dir, 'accounts.csv')
 # *******************************************************************************
 
 
-
-
-
-
-def load_data()->tuple[dict,dict]:
-    """
-    Populates a client dictionary and an account dictionary with 
-    corresponding data from files within the data directory.
-    Returns:
-        tuple containing client dictionary and account dictionary.
-    """
+def load_data() -> tuple[dict, dict]:
     client_listing = {}
     accounts = {}
 
-    # READ CLIENT DATA 
+    # Load Clients
     with open(clients_csv_path, newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for record in reader:
@@ -65,19 +55,18 @@ def load_data()->tuple[dict,dict]:
                 first_name = record['first_name'].strip()
                 last_name = record['last_name'].strip()
                 email_address = record['email_address'].strip()
-
                 client = Client(client_number, first_name, last_name, email_address)
-
                 client_listing[client_number] = client
-
             except Exception as e:
                 logging.error(f"Error processing client record: {record}. Exception: {e}")
 
-    # READ ACCOUNT DATA
+    # Load Accounts
     with open(accounts_csv_path, newline='') as csvfile:
-        reader = csv.DictReader(csvfile)  
+        reader = csv.DictReader(csvfile)
         for record in reader:
             try:
+                account_type = record['account_type'].strip()
+    
                 account_number = int(record['account_number'])
                 client_number = int(record['client_number'])
                 balance = float(record['balance'])
@@ -85,25 +74,25 @@ def load_data()->tuple[dict,dict]:
 
                 if account_type == "ChequingAccount":
                     account = ChequingAccount(account_number, client_number, balance)
-                elif account_type == "InvestmentAccount":
-                    account = InvestmentAccount(account_number, client_number, balance)
                 elif account_type == "SavingsAccount":
                     account = SavingsAccount(account_number, client_number, balance)
+                elif account_type == "InvestmentAccount":
+                    account = InvestmentAccount(account_number, client_number, balance)
                 else:
-                    logging.error(f"Not a valid account type: {account_type} | Record: {record}")
+                    logging.error(f"Invalid account type: {account_type} | Record: {record}")
                     continue
-                
+
                 if client_number in client_listing:
                     accounts[account_number] = account
                 else:
-                    logging.error(f"Bank Account: {account_number} contains invalid Client Number: {client_number}")
+                    logging.error(f"Bank Account {account_number} has invalid Client Number {client_number}")
 
+            except ValueError as e:
+                logging.error(f"Data parsing error in record {record}: {e}")
             except Exception as e:
-                logging.error(f"Error processing account record: {record}. Exception: {e}")
+                logging.error(f"Unexpected error processing record {record}: {e}")
 
-    # RETURN STATEMENT
     return client_listing, accounts
-
 
 def update_data(updated_account: BankAccount) -> None:
     """
@@ -120,18 +109,14 @@ def update_data(updated_account: BankAccount) -> None:
         
         for row in reader:
             account_number = int(row['account_number'])
-            # Check if the account number is in the dictionary
             if account_number == updated_account.account_number:
-                # Update the balance column with the new balance from the dictionary
                 row['balance'] = updated_account.balance
             updated_rows.append(row)
 
-    # Write the updated data back to the CSV
     with open(accounts_csv_path, mode='w', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=fields)
         writer.writeheader()
         writer.writerows(updated_rows)
-
 
 # GIVEN TESTING SECTION:
 if __name__ == "__main__":

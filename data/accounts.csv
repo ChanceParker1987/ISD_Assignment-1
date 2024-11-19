@@ -29,7 +29,7 @@ account_number,client_number,balance,date_created,account_type,overdraft_limit,o
 20027,1009,17612.34,2023-10-10,ChequingAccount,-320,0.053,Null,Null
 20028,1002,4312.58,2023-10-10,InvestmentAccount,Null,Null,Null,4.45
 20029,1007,1702.34,2023-10-10,SavingsAccount,Null,Null,66,Null
-20030,1001,2890.89,2023-10-10,ChequingAccount,-503,0.028,Null,Null
+20030,1001,890.8899999999999,2023-10-10,ChequingAccount,-503,0.028,Null,Null
 20031,1007,7532.32,2023-10-10,InvestmentAccount,Null,Null,Null,0.97
 20032,1005,2891.08,2023-10-10,SavingsAccount,Null,Null,76,Null
 20033,1004,19391.12,2023-10-10,ChequingAccount,-271,0.086,Null,Null
