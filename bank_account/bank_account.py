@@ -10,13 +10,16 @@ from patterns.observer.subject import Subject
 class BankAccount(Subject, ABC):
     """
     BankAccount class: Represents a Client Bank Account.
+
     Attributes:
         __account_number (int): The unique id of the bank account.
         __client_number (int): The unique id of the client.
         __balance (float): The balance of the bank account.
+
     Constants:
         LOW_BALANCE_LEVEL (float): The threshold below which a low balance warning is triggered.
         LARGE_TRANSACTION_THRESHOLD (float): The threshold above which a large transaction warning is triggered.
+
     Methods:
         __init__(): Initializes the BankAccount object.
         account_number(): Accessor for the account_number attribute.
@@ -38,13 +41,15 @@ class BankAccount(Subject, ABC):
         super().__init__()
         """
         Initializes a BankAccount object on received arguments (if valid).
-        args:
+
+        Args:
             account_number (int): The account's unique id.
             client_number (int): The client's unique id.
             balance (float): The balance of the bank account.
             date_created (date): The date the account was created, defaults to today 
             if not specified.
-        raises:
+
+        Raises:
             ValueError if any of the arguments are invalid.
         """
 
@@ -74,7 +79,9 @@ class BankAccount(Subject, ABC):
     def account_number(self) -> int:
         """
         Accessor for the __account_number attribute.
-        Returns: int - The unique id associated with the bank_account instance.
+
+        Returns: 
+            int: The unique id associated with the bank_account instance.
         """
         return self.__account_number
     
@@ -82,7 +89,9 @@ class BankAccount(Subject, ABC):
     def client_number(self) -> int:
         """
         Accessor for the __client_number attribute.
-        Returns: int - The unique id associated with the client instance.
+
+        Returns: 
+            int: The unique id associated with the client instance.
         """
         return self.__client_number
     
@@ -90,14 +99,17 @@ class BankAccount(Subject, ABC):
     def balance(self) -> float:
         """
         Accessor for the __balance attribute.
-        Returns: float - The balance of the bank acount as a float.
+
+        Returns: 
+            float: The balance of the bank acount as a float.
         """
         return self.__balance
     
     def update_balance(self, amount: float):
         """
         Updates the balance of the bank account by adding the given amount.
-        args:
+
+        Args:
             amount (float): The amount to add to the balance, can be positive or negative.
         """
         try:
@@ -115,7 +127,8 @@ class BankAccount(Subject, ABC):
     def deposit(self, amount: float):
         """
         Deposits funds as a float into a bank account.
-        args:
+
+        Args:
             amount (float): The amount to be deposited into the bank account"
         """
         if not isinstance(amount, (int,float)):
@@ -129,7 +142,8 @@ class BankAccount(Subject, ABC):
     def withdraw(self, amount: float):
         """
         Withdraws funds as a float from a bank account.
-        args:
+
+        Args:
             amount (float): The amount to be withdrawn from the bank account"
         """
         if not isinstance(amount, (int, float)):
@@ -147,7 +161,9 @@ class BankAccount(Subject, ABC):
     def __str__(self) -> str:
         """
         Returns a string representation of the BankAccount instance.
-        Returns: str - The BankAccount instance as a formatted string.
+
+        Returns: 
+            str: The BankAccount instance as a formatted string.
         """
         return (f"Account Number: {self.__account_number} Balance: {self.__balance:.2f}.")
     

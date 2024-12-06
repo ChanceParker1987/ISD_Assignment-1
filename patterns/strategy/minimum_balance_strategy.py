@@ -8,8 +8,10 @@ from patterns.strategy.service_charge_strategy import ServiceChargeStrategy
 class MinimumBalanceStrategy(ServiceChargeStrategy):
     """
     Strategy for calculating service charges based on a minimum balance requirement.
+
     Attributes:
-        minimum_balance (float): The required minimum balance for the account.
+        __minimum_balance (float): The required minimum balance for the account.
+
     Constant:
         SERVICE_CHARGE_PREMIUM (float): The premium multiplier applied if balance is below minimum.
     """
@@ -19,6 +21,7 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
     def __init__(self, minimum_balance: float):
         """
         Initializes the MinimumBalanceStrategy with the required minimum balance.
+
         Args:
             minimum_balance (float): The required minimum balance for the account.
         """
@@ -27,8 +30,10 @@ class MinimumBalanceStrategy(ServiceChargeStrategy):
     def calculate_service_charges(self, account: BankAccount) -> float:
         """
         Calculates the service charges based on the account balance.
+
         Args:
             account (BankAccount): The bank account to calculate the charges for.
+
         Returns:
             float: The calculated service charge.
         """

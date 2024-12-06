@@ -1,6 +1,7 @@
 # REQUIREMENT - add import statements
 from user_interface.client_lookup_window import ClientLookupWindow
 
+
 # GIVEN:
 from PySide6.QtWidgets import QApplication
 

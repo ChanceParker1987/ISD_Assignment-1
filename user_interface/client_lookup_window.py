@@ -7,10 +7,20 @@ from user_interface.manage_data import load_data, update_data
 from bank_account import *
 
 class ClientLookupWindow(LookupWindow):
+    """
+    A window for looking up and managing client accounts.
+
+    Attributes:
+        client_listing (dict): A dictionary of client data loaded from a file.
+        accounts (dict): A dictionary of bank account data loaded from a file.
+    """
     def __init__(self):
         """
         Initializes the ClientLookupWindow instance.
         Executes superclass initialization and sets up necessary attributes and event connections.
+
+        Raises:
+            Exception: If loading data from the files fails.
         """
         super().__init__()
         
@@ -19,6 +29,7 @@ class ClientLookupWindow(LookupWindow):
         self.lookup_button.clicked.connect(self.on_lookup_client)
         self.account_table.cellClicked.connect(self.on_select_account)
         self.client_number_edit.textChanged.connect(self.__on_text_changed)
+        self.filter_button.clicked.connect(self.on_filter_clicked)
         
     @Slot()
     def __on_text_changed(self):
@@ -28,6 +39,13 @@ class ClientLookupWindow(LookupWindow):
         """
         Handles the event when a cell in the account_table is clicked.
         Opens an AccountDetailsWindow to display or edit the account details.
+
+        Args:
+            row (int): The row of the clicked cell in the account table.
+            column (int): The column of the clicked cell in the account table.
+
+        Raises:
+            Exception: If an unexpected error occurs while opening the account details window.
         """
         try:
             account_number_item = self.account_table.item(row, 0)
@@ -55,8 +73,12 @@ class ClientLookupWindow(LookupWindow):
     def update_data(self, updated_account: BankAccount):
         """
         Updates the account table and the accounts.csv file with the updated balance.
+
         Args:
             updated_account (BankAccount): The updated BankAccount object.
+
+        Raises:
+            Exception: If updating the account data or file fails.
         """
         try:
             
@@ -77,6 +99,9 @@ class ClientLookupWindow(LookupWindow):
         """
         Handles the lookup of a client based on the entered client number.
         Displays client details and their associated accounts in the account_table.
+        
+        Raises:
+            ValueError: If the client number is invalid or not found.
         """
         try:
             client_number = int(self.client_number_edit.text().strip())
@@ -119,3 +144,61 @@ class ClientLookupWindow(LookupWindow):
                 self.account_table.setItem(row_position, 3, account_type_item)
 
         self.account_table.resizeColumnsToContents()
+
+        self.toggle_filter(False)
+
+    @Slot()
+    def on_filter_clicked(self):
+        """
+        Handles the filtering of records in the account_table based on user-defined criteria.
+        Toggles the display of the filtering widgets to indicate whether the table is filtered or complete.
+        """
+        filter_button_text = self.filter_button.text()
+
+        if filter_button_text == "Apply Filter":
+
+            filter_column_index = self.filter_combo_box.currentIndex()
+            filter_text = self.filter_edit.text().strip()
+
+            for row in range(self.account_table.rowCount()):
+                item = self.account_table.item(row, filter_column_index)
+                if item and filter_text.lower() in item.text().lower():
+                    self.account_table.setRowHidden(row, False)  
+                else:
+                    self.account_table.setRowHidden(row, True)  
+
+            self.filter_button.setText("Remove Filter")
+            self.toggle_filter(True)  
+
+        else:
+            for row in range(self.account_table.rowCount()):
+                self.account_table.setRowHidden(row, False) 
+
+            self.filter_button.setText("Apply Filter")
+            self.toggle_filter(False)  
+
+    def toggle_filter(self, filter_on: bool):
+        """
+        Toggles the display and state of the filter widgets to indicate whether filtering is active.
+
+        Args:
+            filter_on (bool): Whether filtering is currently active.
+        """
+        self.filter_button.setEnabled(True)  
+
+        if filter_on:
+            self.filter_button.setText("Reset")
+            self.filter_combo_box.setEnabled(False)
+            self.filter_edit.setEnabled(False)
+            self.filter_label.setText("Data is Currently Filtered")
+        else:
+            self.filter_button.setText("Apply Filter")
+            self.filter_combo_box.setEnabled(True)
+            self.filter_edit.setEnabled(True)
+            self.filter_edit.setText("")
+            self.filter_combo_box.setCurrentIndex(0)
+
+            for row in range(self.account_table.rowCount()):
+                self.account_table.setRowHidden(row, False)
+
+            self.filter_label.setText("Data is Not Currently Filtered")

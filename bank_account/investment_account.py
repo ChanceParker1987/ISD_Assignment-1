@@ -11,8 +11,11 @@ class InvestmentAccount(BankAccount):
     """
     InvestmentAccount class: Represents a specific bank account with a 
     management fee.
+
     Attributes:
-        management_fee (float): The management fee for the account.
+        __management_fee (float): The fee for managing the investment account.
+        __service_charge_strategy (ManagementFeeStrategy): Strategy for calculating service charges.
+        
     Methods:
         get_service_charges: calculates and returns the service charges 
         based on the age of the account.
@@ -25,13 +28,15 @@ class InvestmentAccount(BankAccount):
         """
         Initializes the InvestmentAccount object on recieved arguments
         (if valid). Inherits from the BankAccount class.
-        args:
+
+        Args:
             account_number (int): The account's unique id.
             client_number (int): The client's unique id.
             balance (float): The balance of the bank account.
             date_created (date): The date the account was created, defaults to today. 
             management_fee (float): The fee to manage the investment account.
-        raises:
+
+        Raises:
             ValueError if any of the arguments are invalid.
         """
 
@@ -45,7 +50,9 @@ class InvestmentAccount(BankAccount):
     def __str__(self)-> str:
         """
         Returns a string representation of the InvestmentAccount instance.
-        Returns: str - The investment account instance as a formatted string.
+
+        Returns: 
+            str: The investment account instance as a formatted string.
         """ 
         account_info = super().__str__()
 
@@ -60,7 +67,9 @@ class InvestmentAccount(BankAccount):
     def get_service_charges(self)-> float:
         """
         Calculates the service charges based on the age of the account.
-        Returns: float - The calculated service charge.
+
+        Returns: 
+            float: The calculated service charge.
         """
         return self.__service_charge_strategy.calculate_service_charges(self)
     

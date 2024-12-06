@@ -98,6 +98,7 @@ def update_data(updated_account: BankAccount) -> None:
     """
     A function to update the accounts.csv file with balance 
     data provided in the BankAccount argument.
+    
     Args:
         updated_account (BankAccount): A bank account containing an updated balance.
     """

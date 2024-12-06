@@ -13,6 +13,7 @@ class Observer(ABC):
     def update(self, message: str) -> None:
         """
         Update method to notify observers of changes.
+        
         Args:
             message (str): The message containing information about the change.
         """

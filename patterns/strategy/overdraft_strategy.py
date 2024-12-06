@@ -18,6 +18,7 @@ class OverdraftStrategy(ServiceChargeStrategy):
         """
         Initializes the OverdraftStrategy with attributes necessary for calculating
         service charges on overdraft accounts.
+
         Args:
             overdraft_limit (float): The maximum overdraft allowed.
             overdraft_rate (float): The interest rate for overdraft.
@@ -28,8 +29,10 @@ class OverdraftStrategy(ServiceChargeStrategy):
     def calculate_service_charges(self, account: BankAccount) -> float:
         """
         Calculates service charges based on the overdraft rules.
+
         Args:
             account (BankAccount): The bank account to calculate the charges.
+            
         Returns:
             float: The calculated service charge.
         """

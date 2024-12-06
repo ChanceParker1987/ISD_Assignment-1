@@ -7,6 +7,10 @@ import copy
 class AccountDetailsWindow(DetailsWindow):
     """
     A class used to display account details and perform bank account transactions.
+
+    Attributes:
+        account (BankAccount): A copy of the provided account object for transactions.
+        balance_updated (Signal): A signal emitted when the account balance is updated.
     """
 
     balance_updated = Signal(BankAccount)
@@ -14,8 +18,10 @@ class AccountDetailsWindow(DetailsWindow):
     def __init__(self, account: BankAccount) -> None:
         """
         Initializes a new instance of the ExtendedAccountDetails window.
+
         Args:
             account: The bank account to be displayed.
+
         Returns:
             None
         """
@@ -38,6 +44,9 @@ class AccountDetailsWindow(DetailsWindow):
         """
         Handles deposit and withdrawal transactions for the account.
         Updates the balance label on success or displays an error message on failure.
+
+        Raises:
+            ValueError: If the transaction amount is invalid or the operation fails.
         """
         try:
             amount = float(self.transaction_amount_edit.text().strip())

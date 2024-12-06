@@ -11,9 +11,12 @@ class ChequingAccount(BankAccount):
     """
     ChequingAccount class: Represents a specific type of bank account with 
     an overdraft.
+
     Attributes:
-        overdraft_limit (float): The overdraft limit of the account.
-        overdraft_rate (float): The interest rate for the overfraft amount.
+        __overdraft_limit (float): The overdraft limit of the account.
+        __overdraft_rate (float): The interest rate applied to the overdraft amount.
+        __service_charge_strategy (OverdraftStrategy): The strategy for calculating service charges.
+
     Methods:
         get_service_charges (float): calculates and returns the service charges 
         for the account based on the balance, overdraft_limit and overdraft_rate.
@@ -26,13 +29,15 @@ class ChequingAccount(BankAccount):
         """
         Initializes the ChequingAccount object on recievied arguments 
         (if valid). Inherits from the BankAccount class.
-        args:
+
+        Args:
             account_number (int): The account's unique id.
             client_number (int): The client's unique id.
             balance (float): The balance of the bank account.
             date_created (date): The date the account was created, defaults to today.
             overdraft_limit (float): The overdraft limit of the chequing account.
             overdraf_rate (float): The interest rate of the overdraft.
+
         Raises:
             ValueError if any of the arguments are invalid.
         """
@@ -52,15 +57,18 @@ class ChequingAccount(BankAccount):
     def get_service_charges(self) -> float:
         """
         Method to calculate service charges for the ChequingAccount.
-        Returns: float - The calculated service charges for the 
-        chequing account.
+
+        Returns: 
+            float: The calculated service charges for the chequing account.
         """
         return self.__service_charge_strategy.calculate_service_charges(self)
     
     def __str__(self)-> str:
         """
         Returns a string representation of the ChequingAccount instance.
-        Returns: str - The ChequingAccount instance as a formatted string.
+
+        Returns: 
+            str: The ChequingAccount instance as a formatted string.
         """
         account_info = super().__str__()
 
